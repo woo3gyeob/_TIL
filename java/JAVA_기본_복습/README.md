@@ -314,7 +314,284 @@ public class Main {
 
 <br>
 
+<br>
 
+## 조건문, 반복문
+
+#### `조건문 if`
+
+1) 대소비교
+
+```java
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		int score = 95;
+		if(score >= 90){
+			System.out.println("A+");
+		}
+		else if(score >= 80){
+			System.out.println("B+");
+		}
+		else{
+			System.out.println("C+");
+		}
+	}	
+}
+// 출력
+A+
+```
+
+2) 문자열의 `contains()` 활용
+
+```java
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		String a = "I love You";
+		if(a.contains("love")) {
+			// 포함하는 경우, 실행되는 부분
+			System.out.println("Me too.");
+		}else{
+			// 포함하지 않은 경우, 실행되는 부분
+			System.out.println("I hate you");
+		}
+	}
+}
+// 출력
+Me too.
+```
+
+3) 문자열의 동일여부 비교는 **`string.equals("대상문자열")`** 을 사용한다
+
+​    문자열을 대/소문자와 상관없이 같은지 비교할 때는 **`string.equalsIgnoreCase("대상문자열")`** 사용
+
+```java
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		String a = "man";
+		int b = 0;
+		
+		// 자바는 String을 비교할 때 equal()을 이용한다
+		// 그 이유는 String은 다른 자료형과 다른 문자열 자료형이기 때문이다
+		if(a.equals("man")){
+			System.out.println("남자입니다");
+		}
+		else{
+			System.out.println("여자입니다");
+		}
+		if(b == 0){
+			System.out.println("b는 0입니다");
+		}
+		else{
+			System.out.println("b는 0이 아닙니다");
+		}
+		if(a.equalsIgnoreCase("Man")){
+			System.out.println("대소문자 상관없이 같습니다");
+		}
+	}
+	
+}
+```
+
+<br>
+
+#### `반복문`
+
+##### while
+
+```java
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		int i = 1, result = 0;
+		while(i<1001){
+			result += i++;
+		}
+		System.out.println("1부터 1000까지의 합은 " + result);
+	}
+}
+// 출력
+1부터 1000까지의 합은 500500
+```
+
+#### for
+
+```java
+public class Main {
+	
+	final static int N = 5;
+	
+	public static void main(String[] args) {
+		
+		// for문: 초기화부분, 조건 부분, 연산 부분
+		for(int i = N; i > 0; i--){
+			
+			for(int j=i; j>0; j--){
+				System.out.print(j + " ");
+			}
+			System.out.println();
+		}
+	}
+}
+// 출력
+5 4 3 2 1 
+4 3 2 1 
+3 2 1 
+2 1 
+1 
+```
+
+이중 for문으로 원 출력하기
+
+```java
+public class Main {
+	
+	static final int N = 15;
+	
+	public static void main(String[] args) {
+		
+		// x^2 + y^2 = r^2
+		for(int i = -N; i <= N; i++){
+			for(int j = -N; j <= N; j++){
+				if(i*i + j*j <= N*N){
+					System.out.print("*");
+				}
+				else{
+					System.out.print(" ");
+				}
+			}
+			System.out.println();
+		}
+		
+	}
+}
+// 출력
+               *               
+          ***********          
+        ***************        
+      *******************      
+     *********************     
+    ***********************    
+   *************************   
+   *************************   
+  ***************************  
+  ***************************  
+ ***************************** 
+ ***************************** 
+ ***************************** 
+ ***************************** 
+ ***************************** 
+*******************************
+ ***************************** 
+ ***************************** 
+ ***************************** 
+ ***************************** 
+ ***************************** 
+  ***************************  
+  ***************************  
+   *************************   
+   *************************   
+    ***********************    
+     *********************     
+      *******************      
+        ***************        
+          ***********          
+               *               
+```
+
+break 활용
+
+```java
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		int count = 0;
+		for(;;){
+			System.out.print(count + " ");
+			count++;
+			if(count == 10){
+				break;
+			}
+		}
+		
+	}
+}
+// 출력
+0 1 2 3 4 5 6 7 8 9 
+```
+
+<br>
+
+<br>
+
+## 기본 입출력
+
+#### `Scanner 클래스`
+
+#### 정수 입력
+
+```java
+import java.util.Scanner;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.print("정수를 입력하세요 : ");
+		int i = sc.nextInt();
+		System.out.println("입력된 정수는 : " + i + "입니다");
+		sc.close();
+	}
+}
+// 출력
+정수를 입력하세요 : 
+123
+입력된 정수는 : 123입니다
+```
+
+<br>
+
+#### 파일 입력
+
+> sc.hasNextInt() : 다음 입력 정수가 있는지 (boolean)
+>
+> sc.nextInt() : 정수 입력 받기
+
+```java
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		File file = new File("input.txt");
+		try {
+			Scanner sc = new Scanner(file);
+			while(sc.hasNextInt()){
+				System.out.println(sc.nextInt() * 100);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("파일을 읽어오는 도중 오류 발생!");
+		}
+		
+	}
+}
+```
+
+<br>
+
+Scanner로 문자열을 입력 받고 싶을 때는 next()와 nextline() 함수를 적절히 활용 가능
 
 
 
